@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+instance/
+.webassets-cache
+*.sqlite3
+
+# Flask
+*.log
+*.db
+*.pot
+*.pyc
+
+# Node/Yarn
+node_modules/
+yarn-error.log
+yarn.lock
+npm-debug.log
+package-lock.json
+
+# Tailwind
+tailwind.config.js
+tailwind.css
+
+# VSCode/PyCharm
+.vscode/
+.idea/
+
+# Otros
+.DS_Store
+*.swp

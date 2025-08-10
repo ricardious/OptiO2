@@ -1,0 +1,16 @@
+{
+  "name": "optio2",
+  "version": "1.0.0",
+  "description": "A web application for solving, analyzing, and visualizing Operations Research problems for academic and professional purposes.",
+  "main": "index.js",
+  "repository": "https://github.com/ricardious/OptiO2.git",
+  "author": "ricardious <castaneda.systems@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "watch:css": "tailwindcss -i ./app/static/css/global.css -o ./app/static/dist/global.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "tailwindcss": "^4.1.11"
+  }
+}
