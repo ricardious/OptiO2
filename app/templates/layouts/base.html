@@ -8,6 +8,31 @@
     {% block head %}{% endblock %}
 </head>
 <body>
+<svg style="display:none;">
+    <filter id="displacementFilter">
+        <feTurbulence type="turbulence"
+                      baseFrequency="0.01"
+                      numOctaves="2"
+                      result="turbulence"/>
+        <feDisplacementMap in="SourceGraphic"
+                           in2="turbulence"
+                           scale="200"
+                           xChannelSelector="R"
+                           yChannelSelector="G"/>
+    </filter>
+</svg>
+
+<!-- Navbar -->
+{% include 'components/organisms/navbar.html' %}
+
+<!-- Sidebar -->
+{% include 'components/organisms/sidebar.html' %}
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 pl-32 pt-20">
     {% block content %}{% endblock %}
+</main>
+
+<script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
 </body>
 </html>

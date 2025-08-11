@@ -1,0 +1,120 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Información del Curso - OptiO2{% endblock %}
+
+{% block content %}
+    <div class="max-w-4xl mx-auto p-6 rounded-lg">
+        <!-- Encabezado del curso -->
+        <div class="border-b border-white/20 pb-6 mb-6">
+            <h1 class="text-3xl font-bold text-white mb-2 drop-shadow-lg">INVESTIGACIÓN DE OPERACIONES II</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-white">
+                <div><strong>Código:</strong> 603</div>
+                <div><strong>Créditos:</strong> 5</div>
+                <div><strong>Categoría:</strong> Obligatorio</div>
+            </div>
+        </div>
+
+        <!-- Información institucional -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-white mb-3 drop-shadow-md">Información Institucional</h2>
+            <div class="bg-black/20 backdrop-blur-sm p-4 rounded-lg border border-white/20">
+                <p class="text-sm text-white">
+                    <strong>Universidad de San Carlos de Guatemala</strong><br>
+                    Facultad de Ingeniería<br>
+                    Escuela de Ingeniería Mecánica Industrial
+                </p>
+            </div>
+        </div>
+
+        <!-- Requisitos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-blue-500/20 backdrop-blur-sm p-4 rounded-lg border border-blue-300/30">
+                <h3 class="text-lg font-semibold text-blue-100 mb-2">Pre-requisito</h3>
+                <p class="text-sm text-white">Investigación de Operaciones 1 (601)</p>
+            </div>
+            <div class="bg-green-500/20 backdrop-blur-sm p-4 rounded-lg border border-green-300/30">
+                <h3 class="text-lg font-semibold text-green-100 mb-2">Post-requisito</h3>
+                <p class="text-sm text-white">Análisis de Sistemas Industriales (606)</p>
+            </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-white mb-3 drop-shadow-md">Descripción del Curso</h2>
+            <div class="bg-black/20 backdrop-blur-sm p-4 rounded-lg border border-white/20">
+                <p class="text-sm text-white leading-relaxed mb-3">
+                    Las técnicas de investigación de operaciones se encuentran entre las herramientas cuantitativas más
+                    importantes de ingenieros y científicos porque proporcionan medios eficaces para la administración
+                    de recursos: Hombres, máquinas, costos, materiales y tiempo.
+                </p>
+                <p class="text-sm text-white leading-relaxed">
+                    Este curso continúa con la información básica necesaria en modelos cuantitativos para la
+                    administración y planificación, presentando una introducción a la investigación de operaciones
+                    estocásticas y sus aplicaciones.
+                </p>
+            </div>
+        </div>
+
+        <!-- Objetivos -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-white mb-3 drop-shadow-md">Objetivos Generales</h2>
+            <ul class="list-disc list-inside text-sm text-white space-y-2">
+                <li>Utilizar los conceptos adquiridos en la solución de problemas técnicos propios de la ingeniería</li>
+                <li>Asumir actitudes de investigación para la resolución de problemas</li>
+                <li>Plantear modelos propios para aplicarlos en la resolución de problemas profesionales</li>
+            </ul>
+        </div>
+
+        <!-- Contenido -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-white mb-3 drop-shadow-md">Contenido del Curso</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-indigo-500/20 backdrop-blur-sm p-4 rounded-lg border border-indigo-300/30">
+                    <h3 class="font-semibold text-indigo-100 mb-2">Unidad 1</h3>
+                    <p class="text-sm text-white">Teoría de Inventarios</p>
+                </div>
+                <div class="bg-purple-500/20 backdrop-blur-sm p-4 rounded-lg border border-purple-300/30">
+                    <h3 class="font-semibold text-purple-100 mb-2">Unidad 2</h3>
+                    <p class="text-sm text-white">Procesos Estocásticos</p>
+                </div>
+                <div class="bg-teal-500/20 backdrop-blur-sm p-4 rounded-lg border border-teal-300/30">
+                    <h3 class="font-semibold text-teal-100 mb-2">Unidad 3</h3>
+                    <p class="text-sm text-white">Teoría de Colas</p>
+                </div>
+                <div class="bg-orange-500/20 backdrop-blur-sm p-4 rounded-lg border border-orange-300/30">
+                    <h3 class="font-semibold text-orange-100 mb-2">Unidad 4</h3>
+                    <p class="text-sm text-white">Simulación</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evaluación -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-white mb-3 drop-shadow-md">Sistema de Evaluación</h2>
+            <div class="bg-yellow-500/20 backdrop-blur-sm p-4 rounded-lg border border-yellow-300/30">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <h4 class="font-semibold mb-2 text-yellow-100">Zona (75 puntos)</h4>
+                        <ul class="space-y-1 text-white">
+                            <li>• Tres exámenes parciales</li>
+                            <li>• Tareas y hojas de trabajo</li>
+                            <li>• Práctica obligatoria</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2 text-yellow-100">Examen Final</h4>
+                        <p class="text-white">25 puntos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área académica -->
+        <div class="bg-black/20 backdrop-blur-sm p-4 rounded-lg border border-white/20">
+            <p class="text-sm text-white">
+                <strong>Área:</strong> Métodos Cuantitativos y Economía<br>
+                <strong>Escuela:</strong> Mecánica Industrial
+            </p>
+        </div>
+    </div>
+{% endblock %}

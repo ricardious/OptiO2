@@ -1,0 +1,265 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+    <h1 class="text-2xl font-semibold mb-2">Cadenas de Markov</h1>
+    <p class="text-sm text-gray-600 mb-4">Configura tu matriz de transición, valida y visualiza el diagrama y la
+        clasificación.</p>
+
+    {% if error %}
+        <div class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-700">{{ error }}</div>
+    {% endif %}
+
+    <div class="grid gap-6 lg:grid-cols-2">
+        <section class="rounded-2xl border  p-4">
+            <h2 class="text-lg font-medium mb-3">Configurar matriz</h2>
+            <form action="{{ url_for('markov.markov_analyze') }}" method="post" class="grid gap-3">
+
+                <div class="mb-4">
+                    <label for="matrix_size" class="text-sm font-medium block mb-2">Tamaño de la matriz</label>
+                    <select id="matrix_size" class="rounded-lg border p-2 text-sm" onchange="generateMatrix()">
+                        <option value="2">2×2</option>
+                        <option value="3" selected>3×3</option>
+                        <option value="4">4×4</option>
+                        <option value="5">5×5</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="text-sm font-medium block mb-2">Matriz de transición</label>
+                    <div id="matrix_container" class="p-3 border rounded-lg bg-gray-50">
+                    </div>
+                </div>
+
+                <input type="hidden" id="transition_matrix" name="transition_matrix">
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-sm font-medium" for="max_n">Máx. n (f<sub>ii</sub>/periodo)</label>
+                        <input type="number" min="1" id="max_n" name="max_n"
+                               class="w-full rounded-lg border p-2 text-sm"
+                               value="{{ (form_data.max_n if form_data else 30)|default(30) }}">
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
+                            onclick="collectMatrixData()">
+                        Analizar
+                    </button>
+                    <button type="button" class="rounded-lg border px-4 py-2 hover:bg-gray-50" onclick="clearMatrix()">
+                        Limpiar
+                    </button>
+                    <button type="button" class="rounded-lg border px-4 py-2 hover:bg-gray-50" onclick="loadDemo()">
+                        Cargar demo y analizar
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-4 rounded-lg border border-dashed p-3 text-sm text-gray-700">
+                <h3 class="font-medium mb-2">Recordatorios</h3>
+                <ul class="list-disc ml-5 space-y-1">
+                    {% for r in reminders or [] %}
+                        <li>{{ r|safe }}</li>
+                    {% else %}
+                        <li>Matriz cuadrada, no negativa y filas sumando 1.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+
+        <section class="rounded-2xl border bg-indigo-800 p-4">
+            <h2 class="text-lg font-medium mb-3 text-white">Diagrama de transición</h2>
+            <div id="cy" style="height: 460px; border-radius: 12px; border: 1px solid #eee;"></div>
+            <p class="text-xs text-gray-300 mt-2">Aristas i→j si p<sub>ij</sub> &gt; 0. Etiquetas muestran el estado y
+                peso.</p>
+        </section>
+    </div>
+
+    <section class="rounded-2xl border bg-white p-4 mt-6">
+        <h2 class="text-lg font-medium mb-3">Clasificación</h2>
+
+        {% if results %}
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+                <div>
+                    <h3 class="font-semibold mb-1">Clases (comunicación)</h3>
+                    <ul class="list-disc ml-5">
+                        {% for cls in results.classes %}
+                            <li>{{ cls }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-1">Clases cerradas</h3>
+                    {% if results.closed_classes %}
+                        <ul class="list-disc ml-5">
+                            {% for cls in results.closed_classes %}
+                                <li>{{ cls }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}<p class="text-gray-600">Ninguna</p>{% endif %}
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-1">Absorbentes</h3>
+                    <p>{{ results.absorbing or [] }}</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 text-sm mt-4">
+                <div>
+                    <h3 class="font-semibold mb-1">Irreducible</h3>
+                    <p>{{ "Sí" if results.irreducible else "No" }}</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-1">Periodo d(i)</h3>
+                    <ul class="list-disc ml-5">
+                        {% for key, val in results.periods.items() %}
+                            <li>{{ key }}: {{ val if val else "—" }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-1">f<sub>ii</sub> (suma parcial)</h3>
+                    <ul class="list-disc ml-5">
+                        {% for key, val in results.f_sum.items() %}
+                            <li>{{ key }}: {{ "%.6f"|format(val) }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="text-xs text-gray-500 mt-1">En finito: clase cerrada ⇒ recurrente; abierto ⇒
+                        transitorio.</p>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-gray-600 text-sm">Analiza una matriz para ver resultados.</p>
+        {% endif %}
+    </section>
+
+    <script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+    <script>
+        function generateMatrix() {
+            const size = parseInt(document.getElementById('matrix_size').value);
+            const container = document.getElementById('matrix_container');
+
+            let html = '<div class="grid gap-2" style="grid-template-columns: repeat(' + size + ', 1fr);">';
+
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    html += `<input type="number"
+                        id="cell_${i}_${j}"
+                        step="0.01"
+                        min="0"
+                        max="1"
+                        value="0"
+                        class="w-full p-2 text-sm border rounded text-center focus:ring-2 focus:ring-indigo-500"
+                        placeholder="p${i}${j}">`;
+                }
+            }
+            html += '</div>';
+
+            html += '<div class="mt-2 text-xs text-gray-600">Estados: ';
+            for (let i = 0; i < size; i++) {
+                html += `S${i}${i < size - 1 ? ', ' : ''}`;
+            }
+            html += '</div>';
+
+            container.innerHTML = html;
+
+            loadDefaultValues(size);
+        }
+
+        function loadDefaultValues(size) {
+            if (size === 2) {
+                document.getElementById('cell_0_0').value = '0.7';
+                document.getElementById('cell_0_1').value = '0.3';
+                document.getElementById('cell_1_0').value = '0.4';
+                document.getElementById('cell_1_1').value = '0.6';
+            } else if (size === 3) {
+                document.getElementById('cell_0_0').value = '0.4';
+                document.getElementById('cell_0_1').value = '0.6';
+                document.getElementById('cell_0_2').value = '0.0';
+                document.getElementById('cell_1_0').value = '0.2';
+                document.getElementById('cell_1_1').value = '0.5';
+                document.getElementById('cell_1_2').value = '0.3';
+                document.getElementById('cell_2_0').value = '0.0';
+                document.getElementById('cell_2_1').value = '0.4';
+                document.getElementById('cell_2_2').value = '0.6';
+            }
+        }
+
+        function collectMatrixData() {
+            const size = parseInt(document.getElementById('matrix_size').value);
+            let matrixData = [];
+
+            for (let i = 0; i < size; i++) {
+                let row = [];
+                for (let j = 0; j < size; j++) {
+                    const cellValue = document.getElementById(`cell_${i}_${j}`).value;
+                    row.push(cellValue || '0');
+                }
+                matrixData.push(row.join(' '));
+            }
+
+            document.getElementById('transition_matrix').value = matrixData.join('\n');
+        }
+
+        function clearMatrix() {
+            const size = parseInt(document.getElementById('matrix_size').value);
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    document.getElementById(`cell_${i}_${j}`).value = '0';
+                }
+            }
+        }
+
+        function loadDemo() {
+            document.getElementById('matrix_size').value = '3';
+            generateMatrix();
+            document.getElementById('max_n').value = 30;
+            collectMatrixData();
+            document.querySelector('form').submit();
+        }
+
+        (function () {
+            const elements = {{ (cy_elements or []) | tojson }};
+            if (!elements.length) return;
+            const cy = cytoscape({
+                container: document.getElementById('cy'),
+                elements,
+                layout: {name: 'cose', animate: false},
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'background-color': '#6366f1',
+                            'label': 'data(label)',
+                            'color': '#fff',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'font-size': 12,
+                            'width': 36, 'height': 36
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'curve-style': 'bezier',
+                            'target-arrow-shape': 'triangle',
+                            'width': 1.5,
+                            'line-color': '#94a3b8',
+                            'target-arrow-color': '#94a3b8',
+                            'label': 'data(w)',
+                            'font-size': 10,
+                            'text-background-color': '#ffffff',
+                            'text-background-opacity': 0.8,
+                            'text-background-padding': 2
+                        }
+                    }
+                ]
+            });
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            generateMatrix();
+        });
+    </script>
+
+{% endblock %}
