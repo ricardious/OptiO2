@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c273fc9b-a0f6-4fc4-b954-95186ff4cc2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/core/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/css/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/global.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/dist/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/dist/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/layouts/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/layouts/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +122,8 @@
       <workItem from="1754786034633" duration="7279000" />
       <workItem from="1754840555383" duration="2370000" />
       <workItem from="1754843165579" duration="116000" />
-      <workItem from="1754843329525" duration="27774000" />
+      <workItem from="1754843329525" duration="27911000" />
+      <workItem from="1755062701906" duration="529000" />
     </task>
     <servers />
   </component>
@@ -145,7 +142,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/OptiO2$OptiO2.coverage" NAME="OptiO2 Coverage Results" MODIFIED="1754883347204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/OptiO2$OptiO2.coverage" NAME="OptiO2 Coverage Results" MODIFIED="1755062761622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/OptiO2$config.coverage" NAME="config Coverage Results" MODIFIED="1754783508044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
     <SUITE FILE_PATH="coverage/OptiO2$Flask__app___init___py_.coverage" NAME="Flask (app/__init__.py) Coverage Results" MODIFIED="1754783765250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/OptiO2$Flask__run_py_.coverage" NAME="Flask (run.py) Coverage Results" MODIFIED="1754786295165" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
